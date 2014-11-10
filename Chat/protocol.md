@@ -25,6 +25,18 @@ res_to_all - ответ сервера всем клиентам
 res_to_all_in_channel - ответ сервера всем клиентам в определенном канале
 channel_id - идентификатор канала
 
+## Техническая информация
+
+Для подключения к серверу чата следует использовать websocket-соединение по адресу:
+
+    ws://chat.goodgame.ru:8081/chat/websocket
+
+Для web-браузеров рекомендуется использовать библиотеку [sockjs-client](https://github.com/sockjs/sockjs-client/tree/0.3.x)
+В этом случае, url-соединения будет
+
+    http://chat.goodgame.ru:8081/chat
+
+
 ## Общий вид JSON-сообщения
 
 ```json
