@@ -178,6 +178,81 @@ Changelog:
 </root>
 ```
 
+# Для получения информации о трансляциях по конкретной игре
+
+    http://goodgame.ru/api/getchannelsbygame
+
+## Параметры (POST или GET):
+
+* `game` Текстовый идентификатор игры
+
+## Возвращаемые данные:
+
+* `stream_id` - Внутренний идентификатор трансляции
+* `key` - Идентификатор трансляции, указанный в запросе
+* `title` - Название трансляции
+* `status` - Статус трансляции
+* `viewers` - Количество зрителей
+* `usersinchat` - Количество пользователей в чате
+* `embed` - HTML-код плеера
+* `img` - Полноразмерное изображение трансляции (максимальный размер 1280x720)
+* `thumb` - Уменьшенное изображение трансляции (195х110)
+* `description` - Описание трансляции
+* `games` - Список названий игр, прикрепленных к каналу, через запятую
+* `url` - Адрес страницы трансляции на сайте goodgame.ru
+
+
+## Примеры использования:
+
+Запрос:
+
+    http://goodgame.ru/api/getchannelsbygame?game=starcraft-ii-heart-of-the-swarm
+
+Ответ:
+
+```xml
+<?xml version="1.0"?>
+<root>
+<stream id="6192">
+<stream_id>6192</stream_id>
+<key>Couguar</key>
+<title>Сказки Аюра</title>
+<status>Live</status>
+<viewers>123</viewers>
+<usersinchat>100</usersinchat>
+<embed><![CDATA[<iframe frameborder="0" width="100%" height="100%" src="http://goodgame.ru/player?6192"></iframe>]]></embed>
+<img>http://goodgame.ru/files/logotypes/br_48455_KR3f_orig.jpg</img>
+<thumb/>
+<description><![CDATA[<p>test123</p>]]></description>
+<games>StarCraft II: Heart of the Swarm</games>
+<url>http://goodgame.ru/channel/Couguar/</url>
+</stream>
+<stream id="52">
+<stream_id>52</stream_id>
+<key>52</key>
+<title>iNcontrol (P)</title>
+<status>Live</status>
+<viewers>2235</viewers>
+<usersinchat>12</usersinchat>
+<embed>
+<![CDATA[
+<object type="application/x-shockwave-flash" width="100%" height="100%" id="live_embed_player_flash" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=incontroltv" bgcolor="#000000"><param name="allowFullScreen" value="true" /><param name="allowScriptAccess" value="always" /><param name="allowNetworking" value="all" /><param name="wmode" value="opaque" /><param name="movie" value="http://www.twitch.tv/widgets/live_embed_player.swf" /><param name="flashvars" value="hostname=www.twitch.tv&channel=incontroltv&auto_play=false" /></object>
+]]>
+</embed>
+<img>http://goodgame.ru/images/channel-logo.jpg</img>
+<thumb>
+http://static-cdn.jtvnw.net/previews-ttv/live_user_incontroltv-320x180.jpg
+</thumb>
+<description>
+<![CDATA[ ]]>
+</description>
+<adult>0</adult>
+<games>StarCraft II: Heart of the Swarm</games>
+<url>http://goodgame.ru/channel/52/</url>
+</stream>
+</root>
+```
+
 
 # Получение токена авторизации
 
