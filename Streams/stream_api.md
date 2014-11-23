@@ -2,6 +2,7 @@
 
 Changelog:
 
+    [+] 23.11.2014 возможность получения списка подписчиков
     [+] 11.11.2014 добавлен флаг premium
     [+] 28.06.2014 id канала совпадает с id чата, который теперь можно получить по ссылке http://goodgame.ru/chat/[id канала]
     [+] 14.04.2014 В методы getggchannelstatus и getchannelstatus добавлено поле games со списком прикрепленных игр
@@ -177,3 +178,55 @@ Changelog:
 </root>
 ```
 
+
+# Получение токена авторизации
+
+Для использования некоторых функций API необходимо пройти авторизацию.
+
+    http://goodgame.ru/api/token
+
+## Параметры (POST):
+
+* `username` Ваш логин на сайте goodgame.ru
+* `password` Ваш пароль
+
+## Возвращаемые данные:
+
+* `success` - флаг успешности авторизации
+* `access_token` - токен для последующих запросов
+
+
+# Список подписчиков
+
+Вы можете получить список подписчиков вашего канала.
+
+    http://goodgame.ru/api/getggchannelstatus
+
+## Параметры (POST):
+
+* `oauth_token` - Токен, полученный при авторизации
+
+## Возвращаемые данные:
+
+* `success` - Флаг успеха
+* `response` - Массив подписчиков, содержащий id и username пользователей
+
+## Пример ответа:
+
+Ответ:
+
+```json
+{
+    "success":true,
+    "response":[
+        {"id":"5545","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-default\" title=\"Good Game\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/5545\/\">y32b4<\/a><\/span>","username":"y32b4"},
+        {"id":"52993","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-steam\" title=\"Steam\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/52993\/\">unlucky-irk<\/a><\/span>","username":"unlucky-irk"},
+        {"id":"167969","sign":"<span class=\"sign\"><span class=\"flag flag-by\" title=\"\u0411\u0435\u043b\u0430\u0440\u0443\u0441\u044c\"><\/span><span class=\"gameicon gameicon-sc2-bober\" title=\"bober\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/167969\/\">Leonty<\/a><\/span>","username":"Leonty"},
+        {"id":"27080","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-wc3-rnd\" title=\"Random\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/27080\/\">nextg.loki<\/a><\/span>","username":"nextg.loki"},
+        {"id":"194701","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-default\" title=\"Good Game\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/194701\/\">Salyvador<\/a><\/span>","username":"Salyvador"},
+        {"id":"55438","sign":"<span class=\"sign\"><span class=\"flag flag-bl\" title=\"\u0411\u0435\u043d\u0438\u043b\u044e\u043a\u0441 (\u0413\u043e\u043b\u043b\u0430\u043d\u0434\u0438\u044f + \u0411\u0435\u043b\u044c\u0433\u0438\u044f)\"><\/span><span class=\"gameicon gameicon-chat-bratok\" title=\"bratok\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/55438\/\">clearevil<\/a><\/span>","username":"clearevil"},
+        {"id":"666","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-chat-fp\" title=\"fp\"><\/span><a class=\"ct\" href=\"http:\/\/goodgame.ru\/team\/1\/\">GG.<\/a><a href=\"http:\/\/goodgame.ru\/user\/666\/\">lokki7<\/a><\/span>","username":"lokki7"},
+        {"id":"231","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-wc3-hum\" title=\"Human\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/231\/\">Spail<\/a><\/span>","username":"Spail"}
+    ]
+}
+```
