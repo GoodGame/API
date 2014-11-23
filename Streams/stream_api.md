@@ -219,14 +219,14 @@ Changelog:
 {
     "success":true,
     "response":[
-        {"id":"5545","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-default\" title=\"Good Game\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/5545\/\">y32b4<\/a><\/span>","username":"y32b4"},
-        {"id":"52993","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-steam\" title=\"Steam\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/52993\/\">unlucky-irk<\/a><\/span>","username":"unlucky-irk"},
-        {"id":"167969","sign":"<span class=\"sign\"><span class=\"flag flag-by\" title=\"\u0411\u0435\u043b\u0430\u0440\u0443\u0441\u044c\"><\/span><span class=\"gameicon gameicon-sc2-bober\" title=\"bober\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/167969\/\">Leonty<\/a><\/span>","username":"Leonty"},
-        {"id":"27080","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-wc3-rnd\" title=\"Random\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/27080\/\">nextg.loki<\/a><\/span>","username":"nextg.loki"},
-        {"id":"194701","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-default\" title=\"Good Game\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/194701\/\">Salyvador<\/a><\/span>","username":"Salyvador"},
-        {"id":"55438","sign":"<span class=\"sign\"><span class=\"flag flag-bl\" title=\"\u0411\u0435\u043d\u0438\u043b\u044e\u043a\u0441 (\u0413\u043e\u043b\u043b\u0430\u043d\u0434\u0438\u044f + \u0411\u0435\u043b\u044c\u0433\u0438\u044f)\"><\/span><span class=\"gameicon gameicon-chat-bratok\" title=\"bratok\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/55438\/\">clearevil<\/a><\/span>","username":"clearevil"},
-        {"id":"666","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-chat-fp\" title=\"fp\"><\/span><a class=\"ct\" href=\"http:\/\/goodgame.ru\/team\/1\/\">GG.<\/a><a href=\"http:\/\/goodgame.ru\/user\/666\/\">lokki7<\/a><\/span>","username":"lokki7"},
-        {"id":"231","sign":"<span class=\"sign\"><span class=\"flag flag-ru\" title=\"\u0420\u043e\u0441\u0441\u0438\u044f\"><\/span><span class=\"gameicon gameicon-wc3-hum\" title=\"Human\"><\/span><a href=\"http:\/\/goodgame.ru\/user\/231\/\">Spail<\/a><\/span>","username":"Spail"}
+        { "id":"5545", "username":"y32b4" },
+        { "id":"52993", "username":"unlucky-irk" },
+        { "id":"167969", "username":"Leonty" },
+        { "id":"27080", "username":"nextg.loki" },
+        { "id":"194701", "username":"Salyvador" },
+        { "id":"55438", "username":"clearevil" },
+        { "id":"666", "username":"lokki7" },
+        { "id":"231", "username":"Spail" }
     ]
 }
 ```
