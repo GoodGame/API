@@ -59,8 +59,8 @@ data - вынесена в отдельную json сущность, для бо
 {
     type: "welcome",
     data: {
-        protocolVersion: 0.1,
-        serverIdent: "GG-chat/1.0"
+        protocolVersion: 1.1,
+        serverIdent: "GG-chat/1.0 beta"
     }
 }
 ```
