@@ -275,7 +275,7 @@ http://static-cdn.jtvnw.net/previews-ttv/live_user_incontroltv-320x180.jpg
 
 Вы можете получить список подписчиков вашего канала.
 
-    http://goodgame.ru/api/getggchannelstatus
+    http://goodgame.ru/api/getchannelsubscribers
 
 ## Параметры (POST):
 
