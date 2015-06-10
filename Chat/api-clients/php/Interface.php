@@ -80,6 +80,13 @@ interface Chat_Api_Interface
 
     /**
      *
+     * @param int $channelId
+     * @param array $owners
+     */
+    public function addChannelOwners($channelId, $owners = array());
+
+    /**
+     *
      * @param string $groupKey
      * @param string $groupTitle
      * @return boolean
