@@ -18,6 +18,9 @@ interface Chat_Api_Interface
     CONST RIGHTS_SMODERATOR     = 40;
     CONST RIGHTS_ADMIN          = 50;
 
+    // credential roles
+    CONST ROLE_ADMIN = 'admin';
+
     /**
      *
      * @param string $apiId
@@ -87,6 +90,13 @@ interface Chat_Api_Interface
 
     /**
      *
+     * @param int $start
+     * @param int $count
+     */
+    public function getOnlineChannels($start = 0, $count = 0);
+
+    /**
+     *
      * @param string $groupKey
      * @param string $groupTitle
      * @return boolean
@@ -110,4 +120,30 @@ interface Chat_Api_Interface
      * @return boolean
      */
     public function unassignUserFromGroup($userId, $groupKey, $channelId);
+
+    /**
+     *
+     * @param int $userId
+     * @param int $channelId
+     * @param string $smileKey
+     */
+    public function addUserSmile($userId, $channelId, $smileKey);
+
+    /**
+     *
+     * @param int $userId
+     * @param int $channelId
+     * @param string $smileKey
+     */
+    public function deleteUserSmile($userId, $channelId, $smileKey);
+
+    /**
+     *
+     * @param int $siteId
+     * @param string $authId
+     * @param string $authToken
+     * @param string $role
+     * @return boolean
+     */
+    public function addSiteCredential($siteId, $authId, $authToken, $role);
 }

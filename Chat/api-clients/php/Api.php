@@ -211,6 +211,68 @@ class Chat_Api implements Chat_Api_Interface
         return $this->processRequest();
     }
 
+    public function addUserSmile($userId, $channelId, $smileKey)
+    {
+        $this->setLastAction('addUserSmile');
+        $this->setLastData(func_get_args());
+        $this->setApiUrl('/user/' . $userId . '/smile');
+        $this->curl->post(array(
+            'channel_id' => $channelId,
+            'smile_key'  => $smileKey
+        ));
+
+        return $this->processRequest();
+    }
+
+    public function deleteUserSmile($userId, $channelId, $smileKey)
+    {
+        $this->setLastAction('deleteUserSmile');
+        $this->setLastData(func_get_args());
+        $this->setApiUrl('/user/' . $userId . '/smile');
+        $this->curl->delete(array(
+            'channel_id' => $channelId,
+            'smile_key'  => $smileKey
+        ));
+
+        return $this->processRequest();
+    }
+
+    public function getOnlineChannels($start = 0, $count = 0)
+    {
+        $this->setLastAction('getOnlineChannels');
+        $this->setLastData(func_get_args());
+        $this->setApiUrl('/channels/online');
+        $this->curl->get(array(
+            'start' => $start,
+            'count'  => $count
+        ));
+
+        return $this->processRequest();
+    }
+
+    /**
+     *
+     * @param int $siteId
+     * @param string $authId
+     * @param string $authToken
+     * @param string $role
+     * @return boolean
+     */
+    public function addSiteCredential($siteId, $authId, $authToken, $role)
+    {
+        $this->setLastAction('addSiteCredential');
+        $this->setLastData(func_get_args());
+        $this->setApiUrl('/site/credential');
+        $this->curl->post(array(
+            'site_id' => $siteId,
+            'auth_id'  => $authId,
+            'auth_token' => $authToken,
+            'role' => $role
+        ));
+
+        return $this->processRequest();
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     protected function processRequest()
