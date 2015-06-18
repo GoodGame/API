@@ -273,6 +273,20 @@ class Chat_Api implements Chat_Api_Interface
         return $this->processRequest();
     }
 
+    public function deleteSiteCredential($siteId, $authId, $role)
+    {
+        $this->setLastAction('deleteSiteCredential');
+        $this->setLastData(func_get_args());
+        $this->setApiUrl('/site/credential');
+        $this->curl->delete(array(
+            'site_id' => $siteId,
+            'auth_id'  => $authId,
+            'role' => $role
+        ));
+
+        return $this->processRequest();
+    }
+
     /* * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
     protected function processRequest()

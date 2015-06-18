@@ -146,4 +146,12 @@ interface Chat_Api_Interface
      * @return boolean
      */
     public function addSiteCredential($siteId, $authId, $authToken, $role);
+
+    /**
+     *
+     * @param int $siteId
+     * @param string $authId
+     * @param string $role
+     */
+    public function deleteSiteCredential($siteId, $authId, $role);
 }
