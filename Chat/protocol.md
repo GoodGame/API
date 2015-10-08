@@ -830,7 +830,8 @@ inline-команда /list
 
 Донат:
 ```json
-//res_to_client
+// res_to_client
+// Поля total и title передаются только при донате в призовой фонд турнира
 {
     type: "payment",
     data: {
@@ -838,7 +839,7 @@ inline-команда /list
         userName: "Петя",
         amount: 199,
         message: "Эгегей!",
-        total: 230,             // Поля total и title передаются только при донате в призовой фонд турнира
+        total: 230,
         title: "Турнир номер 1"
     }
 }
