@@ -76,8 +76,23 @@ Changelog:
 Ответ:
 
 ```json
-    {"5":{"stream_id":"5","key":"Miker","premium":"true","title":"Miker","status":"Live","viewers":"1465","usersinchat":"646","embed":"<iframe frameborder=\"0\" width=\"800\" height=\"450px\" src=\"http:\/\/goodgame.ru\/player?6\"><\/iframe>","img":"http:\/\/goodgame.ru\/files\/logotypes\/ch_5_39Tp.png","thumb":"","description":"","games":"Space Invaders Get Even, Gears of War 3, Outland"
-    ,"url":"http:\/\/goodgame.ru\/channel\/Miker\/"}}
+{
+    "5": {
+        "stream_id": "5",
+        "key": "Miker",
+        "premium": "true",
+        "title": "Miker",
+        "status": "Live",
+        "viewers": "1465",
+        "usersinchat": "646",
+        "embed": "<iframe frameborder=\"0\" width=\"800\" height=\"450px\" src=\"http:\/\/goodgame.ru\/player?6\"><\/iframe>",
+        "img": "http:\/\/goodgame.ru\/files\/logotypes\/ch_5_39Tp.png",
+        "thumb": "",
+        "description": "",
+        "games": "Space Invaders Get Even, Gears of War 3, Outland",
+        "url": "http:\/\/goodgame.ru\/channel\/Miker\/"
+    }
+}
 ```
 
 Запрос:
@@ -122,8 +137,36 @@ Changelog:
 Ответ:
 
 ```json
-    {"5":{"stream_id":"5","key":"Miker","premium":"true","title":"XCOM","status":"Live","viewers":"880","usersinchat":"531","embed":"<iframe frameborder=\"0\" width=\"800px\" height=\"450px\" src=\"http:\/\/goodgame.ru\/player?6\"><\/iframe>","img":"http:\/\/goodgame.ru\/files\/logotypes\/ch_5_39Tp.png","thumb":"","description":"","url":"http:\/\/goodgame.ru\/channel\/Miker\/"},
-    "1644":{"stream_id":"1644","key":"Pomi","premium":"true","title":"$ 2000 HotS KotH by GD Studio ","status":"Dead","viewers":"12","usersinchat":"5","embed":"<iframe frameborder=\"0\" width=\"800px\" height=\"450px\" src=\"http:\/\/goodgame.ru\/player?pomi\"><\/iframe>","img":"http:\/\/goodgame.ru\/files\/logotypes\/ch_1644_oRqp.jpg","thumb":"","description":"<p><a href=\"http:\/\/goodgame.ru\/channel\/showmatch\/\" rel=\"nofollow\">http:\/\/goodgame.ru\/channel\/showmatch\/<\/a> - \u043f\u043e\u043c\u043e\u0433\u0430\u0435\u043c \u043e\u0440\u0433\u0430\u043d\u0438\u0437\u0430\u0446\u0438\u0438 \u0448\u043e\u0443\u043c\u0430\u0442\u0447\u0435\u0439<\/p>\n<p>\u00a0<\/p>\n<p>\u043c\u043e\u0439 \u043a\u043e\u0448\u0435\u043b\u0451\u043a\u00a0<span>R351383023689\u00a0<\/span><\/p>\n<p><span>\u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0Z272683067160<\/span><\/p>\n<p><span><span>\u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0410011704670305 \u042f\u043d\u0434\u0435\u043a\u0441 \u0434\u0435\u043d\u044c\u0433\u0438<\/span><\/span><\/p>\n<p>\u00a0<\/p>\n<p><a href=\"https:\/\/docs.google.com\/presentation\/d\/1OdHxioFOBKc-u6qJmE-3bOzEZlkuNOOafmwe56oHtrw\/present#slide=id.gf0a79b3_0_39\" rel=\"nofollow\">https:\/\/docs.google.com\/presentation\/d\/1OdHxioFOBKc-u6qJmE-3bOzEZlkuNOOafmwe56oHtrw\/present#slide=id.gf0a79b3_0_39<\/a><\/p>\n<p>\u00a0- \u041f\u043e\u0434\u0434\u0435\u0440\u0436\u0438 \u0441\u0430\u0439\u0442! <span>\u041f\u043e\u0434\u043f\u0438\u0441\u044b\u0432\u0430\u0439\u0441\u044f \u043d\u0430 \u043f\u0440\u0435\u043c\u0438\u0443\u043c \u0442\u0440\u0430\u043d\u0441\u043b\u044f\u0446\u0438\u0438! (\u043d\u0435\u0442 \u0440\u0435\u043a\u043b\u0430\u043c\u044b :D)<br \/><\/span><\/p>\n<p><span>\u00a0<\/span><\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>","url":"http:\/\/goodgame.ru\/channel\/Pomi\/"}}
+{
+    "5": {
+        "stream_id": "5",
+        "key": "Miker",
+        "premium": "true",
+        "title": "XCOM",
+        "status": "Live",
+        "viewers": "880",
+        "usersinchat": "531",
+        "embed": "<iframe frameborder=\"0\" width=\"800px\" height=\"450px\" src=\"http:\/\/goodgame.ru\/player?6\"><\/iframe>",
+        "img": "http:\/\/goodgame.ru\/files\/logotypes\/ch_5_39Tp.png",
+        "thumb": "",
+        "description": "",
+        "url": "http:\/\/goodgame.ru\/channel\/Miker\/"
+    },
+    "1644": {
+        "stream_id": "1644",
+        "key": "Pomi",
+        "premium": "true",
+        "title": "$ 2000 HotS KotH by GD Studio ",
+        "status": "Dead",
+        "viewers": "12",
+        "usersinchat": "5",
+        "embed": "<iframe frameborder=\"0\" width=\"800px\" height=\"450px\" src=\"http:\/\/goodgame.ru\/player?pomi\"><\/iframe>",
+        "img": "http:\/\/goodgame.ru\/files\/logotypes\/ch_1644_oRqp.jpg",
+        "thumb": "",
+        "description": "<p><a href=\"http:\/\/goodgame.ru\/channel\/showmatch\/\" rel=\"nofollow\">http:\/\/goodgame.ru\/channel\/showmatch\/<\/a> - \u043f\u043e\u043c\u043e\u0433\u0430\u0435\u043c \u043e\u0440\u0433\u0430\u043d\u0438\u0437\u0430\u0446\u0438\u0438 \u0448\u043e\u0443\u043c\u0430\u0442\u0447\u0435\u0439<\/p>\n<p>\u00a0<\/p>\n<p>\u043c\u043e\u0439 \u043a\u043e\u0448\u0435\u043b\u0451\u043a\u00a0<span>R351383023689\u00a0<\/span><\/p>\n<p><span>\u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0Z272683067160<\/span><\/p>\n<p><span><span>\u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0 \u00a0410011704670305 \u042f\u043d\u0434\u0435\u043a\u0441 \u0434\u0435\u043d\u044c\u0433\u0438<\/span><\/span><\/p>\n<p>\u00a0<\/p>\n<p><a href=\"https:\/\/docs.google.com\/presentation\/d\/1OdHxioFOBKc-u6qJmE-3bOzEZlkuNOOafmwe56oHtrw\/present#slide=id.gf0a79b3_0_39\" rel=\"nofollow\">https:\/\/docs.google.com\/presentation\/d\/1OdHxioFOBKc-u6qJmE-3bOzEZlkuNOOafmwe56oHtrw\/present#slide=id.gf0a79b3_0_39<\/a><\/p>\n<p>\u00a0- \u041f\u043e\u0434\u0434\u0435\u0440\u0436\u0438 \u0441\u0430\u0439\u0442! <span>\u041f\u043e\u0434\u043f\u0438\u0441\u044b\u0432\u0430\u0439\u0441\u044f \u043d\u0430 \u043f\u0440\u0435\u043c\u0438\u0443\u043c \u0442\u0440\u0430\u043d\u0441\u043b\u044f\u0446\u0438\u0438! (\u043d\u0435\u0442 \u0440\u0435\u043a\u043b\u0430\u043c\u044b :D)<br \/><\/span><\/p>\n<p><span>\u00a0<\/span><\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>\n<p>\u00a0<\/p>",
+        "url": "http:\/\/goodgame.ru\/channel\/Pomi\/"
+    }
+}
 ```
 
 # Для получения информации о предстоящей трансляции (анонс)
