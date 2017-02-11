@@ -39,10 +39,10 @@ channel_id - идентификатор канала
 
 ## Общий вид JSON-сообщения
 
-```json
+```javascript
 {
-    type: "", // заголовок сообщения
-    data: {
+    "type": "", // заголовок сообщения
+    "data": {
         //Дополнительная информация.
     }
 }
@@ -54,13 +54,13 @@ data - вынесена в отдельную json сущность, для бо
 
 ### После установления соединения на "траспортном" уровне, сервер немедленно отвечает сообщением
 
-```json
+```javascript
 //res_to_client
 {
-    type: "welcome",
-    data: {
-        protocolVersion: 1.1,
-        serverIdent: "GG-chat/1.0 beta"
+    "type": "welcome",
+    "data": {
+        "protocolVersion": 1.1,
+        "serverIdent": "GG-chat/1.0 beta"
     }
 }
 ```
@@ -69,22 +69,22 @@ data - вынесена в отдельную json сущность, для бо
 
 ### Авторизация на сервере (необязательная), если не проводилась то клиент считается гостем.
 
-```json
+```javascript
 //req_to_server
 {
-    type: "auth",
-    data: {
-        user_id: "123",         // идентификатор пользователя на сайте, либо 0 для гостей
-        token: "123123fhjdhfjd" // ключ авторизации. Если не указан, то будет запрошен гостевой доступ.
+    "type": "auth",
+    "data": {
+        "user_id": "123",         // идентификатор пользователя на сайте, либо 0 для гостей
+        "token": "123123fhjdhfjd" // ключ авторизации. Если не указан, то будет запрошен гостевой доступ.
     }
 }
 
 //res_to_client
 {
-    type: "success_auth",
-    data: {
-        user_id: "123", // id-пользователя на сайте, для гостей 0
-        user_name: "Василий" // nick на сайте, для гостей ""
+    "type": "success_auth",
+    "data": {
+        "user_id": "123", // id-пользователя на сайте, для гостей 0
+        "user_name": "Василий" // nick на сайте, для гостей ""
     }
 }
 ```
@@ -115,25 +115,25 @@ data - вынесена в отдельную json сущность, для бо
 
 ### Получение списка каналов
 
-```json
+```javascript
 //req_to_server
 {
-    type: "get_channels_list",
-    data: {
-        start: 0, // стартовая позиция (отсчет с 0)
-        count: 50 // количество каналов на страницу (max - 50)
+    "type": "get_channels_list",
+    "data": {
+        "start": 0, // стартовая позиция (отсчет с 0)
+        "count": 50 // количество каналов на страницу (max - 50)
     }
 }
 
 //res_to_client
 {
-    type: "channels_list",
-    data: {
-        channels: [{
-            channel_id: "5",
-            channel_name: "имя канала",
-            clients_in_channel: 545, // всего клиентов в канале, включая гостей
-            users_in_channel: 332,   // всего авторизованных пользователей в канале
+    "type": "channels_list",
+    "data": {
+        "channels": [{
+            "channel_id": "5",
+            "channel_name": "имя канала",
+            "clients_in_channel": 545, // всего клиентов в канале, включая гостей
+            "users_in_channel": 332,   // всего авторизованных пользователей в канале
         },
         ...] // массив каналов, где есть хотя бы 1 пользователь, гости не считаются.
     }
@@ -146,41 +146,41 @@ data - вынесена в отдельную json сущность, для бо
 
 ### Клиент посылает сообщение о намерении присоединиться к каналу.
 
-```json
+```javascript
 //req_to_server
 {
-    type: "join",
-    data: {
-        channel_id: "5" // идентификатор канала
-        hidden: false   // для модераторов: не показывать ник в списке юзеров
+    "type": "join",
+    "data": {
+        "channel_id": "5" // идентификатор канала
+        "hidden": false   // для "модераторов": не показывать ник в списке юзеров
     }
 }
 ```
 
 Если сервер присоединяет клиента к каналу, то клиент информируется сообщением.
 
-```json
+```javascript
 //res_to_client
 {
-    type: "success_join",
-    data: {
-        channel_id: "5",
-        channel_name: "имя канала",
-        motd: "Сообщение дня",  // сообщение дня
-        slowmod: 0, // задержка в секундах между отправкой сообщений
-        smiles: 1,
-        smilePeka: 1,
-        clients_in_channel: 545, // всего клиентов в канале, включая гостей
-        users_in_channel: 332,   // всего авторизованных пользователей в канале
-        user_id: "123", // для гостей "0"
-        name: "Василий", // для гостей ""
-        access_rights: "1", // по этому полю клиент понимает права пользователя, в этом канале.
-        premium: true,
-        is_banned: false,   // забанен или нет в этом канале
-        banned_time: 0, // до какого времени забанен.
-        reason: 'Провоцирование', // текстовая строка с причиной бана.
-        payments: "128.30",
-        paidsmiles: ["1","2","3"]
+    "type": "success_join",
+    "data": {
+        "channel_id": "5",
+        "channel_name": "имя канала",
+        "motd": "Сообщение дня",  // сообщение дня
+        "slowmod": 0, // задержка в секундах между отправкой сообщений
+        "smiles": 1,
+        "smilePeka": 1,
+        "clients_in_channel": 545, // всего клиентов в канале, включая гостей
+        "users_in_channel": 332,   // всего авторизованных пользователей в канале
+        "user_id": "123", // для гостей "0"
+        "name": "Василий", // для гостей ""
+        "access_rights": "1", // по этому полю клиент понимает права пользователя, в этом канале.
+        "premium": true,
+        "is_banned": false,   // забанен или нет в этом канале
+        "banned_time": 0, // до какого времени забанен.
+        "reason": 'Провоцирование', // текстовая строка с причиной бана.
+        "payments": "128.30",
+        "paidsmiles": ["1","2","3"]
     }
 }
 ```
@@ -189,67 +189,67 @@ data - вынесена в отдельную json сущность, для бо
 
 ### Отключение пользователя от канала
 
-```json
+```javascript
 //req_to_server
 {
-    type: "unjoin",
-    data: {
-        channel_id: "5" // идентификатор канала
+    "type": "unjoin",
+    "data": {
+        "channel_id": "5" // идентификатор канала
     }
 }
 
 //res_to_client
 {
-    type: "success_unjoin",
-    data: {
-        channel_id: "5"
+    "type": "success_unjoin",
+    "data": {
+        "channel_id": "5"
     }
 }
 ```
 
 ### Одобрение запроса на подключение к комнате при получении inline-команды /join
 
-```json
+```javascript
 //res_to_client
 {
-    type: 'join_to_room',
-    data: {
-        channel_id: "123", // id-канала, из которого посылалась inline-команда /join
-        room_id: "5" || "r5" // id-канала или если начинается с префикса "r" id-комнаты
+    "type": 'join_to_room',
+    "data": {
+        "channel_id": "123", // id-канала, из которого посылалась inline-команда /join
+        "room_id": "5" || "r5" // id-канала или если начинается с префикса "r" id-комнаты
     }
 }
 ```
 
 ### В любой момент, клиент может получить список всех пользователей в канале.
 
-```json
+```javascript
 //req_to_server
 {
-    type: "get_users_list",
-    data: {
-        channel_id: "5"
+    "type": "get_users_list",
+    "data": {
+        "channel_id": "5"
     }
 }
 ```
 
 Список пользователей в канале. Гости не учитываются.
 
-```json
+```javascript
 //res_to_client
 {
-    type: "users_list",
-    data: {
-        channel_id: "5",
-        clients_in_channel: 545, // всего клиентов в канале, включая гостей
-        users_in_channel: 332,   // всего авторизованных пользователей в канале
-        users: [{
-            id: '55828',
-            name: 'dfcz',
-            rights: 20,
-            premium: false,
-            payments: 'null',
-            mobile: false,
-            hidden: false
+    "type": "users_list",
+    "data": {
+        "channel_id": "5",
+        "clients_in_channel": 545, // всего клиентов в канале, включая гостей
+        "users_in_channel": 332,   // всего авторизованных пользователей в канале
+        "users": [{
+            "id": '55828',
+            "name": 'dfcz',
+            "rights": 20,
+            "premium": false,
+            "payments": 'null',
+            "mobile": false,
+            "hidden": false
         },
         ...] // Массив пользователей которые в данный момент находятся в канале
         // для экономии памяти, клиент может игнорировать этот список.
@@ -259,26 +259,26 @@ data - вынесена в отдельную json сущность, для бо
 
 ### В любой момент, клиент может получить количество клиентов и пользователей, подключенных к каналу
 
-```json
+```javascript
 //req_to_server
 {
-    type: "get_channel_counters",
-    data: {
-        channel_id: "5"
+    "type": "get_channel_counters",
+    "data": {
+        "channel_id": "5"
     }
 }
 ```
 
 Счетчик клиентов и пользователей, подключенных к каналу.
 
-```json
+```javascript
 //res_to_client
 {
-    type: "channel_counters",
-    data: {
-        channel_id: "5",
-        clients_in_channel: 545, // всего клиентов в канале, включая гостей
-        users_in_channel: 332,   // всего авторизованных пользователей в канале
+    "type": "channel_counters",
+    "data": {
+        "channel_id": "5",
+        "clients_in_channel": 545, // всего клиентов в канале, включая гостей
+        "users_in_channel": 332,   // всего авторизованных пользователей в канале
     }
 }
 ```
@@ -287,15 +287,15 @@ data - вынесена в отдельную json сущность, для бо
 
 inline-команда /list
 
-```json
+```javascript
 //res_to_client
 {
-    type: "list",
-    data: {
-        channel_id: "5",
-        users: [{
-            id: "6",
-            name: "Василий"
+    "type": "list",
+    "data": {
+        "channel_id": "5",
+        "users": [{
+            "id": "6",
+            "name": "Василий"
         },
         ...
         ]
@@ -305,25 +305,25 @@ inline-команда /list
 
 ### Если пользователь залогинен, то он может получить игнор-лист
 
-```json
+```javascript
 //req_to_server
 {
-    type: "get_ignore_list",
-    data: {
+    "type": "get_ignore_list",
+    "data": {
     }
 }
 ```
 
 Список общий для всех каналов.
 
-```json
+```javascript
 //res_to_client
 {
-    type: "ignore_list",
-    data: {
-        users: [{
-            id: "6",
-            name: "Василий"
+    "type": "ignore_list",
+    "data": {
+        "users": [{
+            "id": "6",
+            "name": "Василий"
         },
         ...
         ]
@@ -333,12 +333,12 @@ inline-команда /list
 
 ### Добавить в игнор лист
 
-```json
+```javascript
 //req_to_server
 {
-    type: "add_to_ignore_list",
-    data: {
-        user_id: "77"
+    "type": "add_to_ignore_list",
+    "data": {
+        "user_id": "77"
     }
 }
 ```
@@ -347,12 +347,12 @@ inline-команда /list
 
 ### Удалить из игнор листа
 
-```json
+```javascript
 //req_to_server
 {
-    type: "del_from_ignore_list",
-    data: {
-        user_id: "77"
+    "type": "del_from_ignore_list",
+    "data": {
+        "user_id": "77"
     }
 }
 ```
@@ -361,27 +361,27 @@ inline-команда /list
 
 ### Получение истории сообщений канала
 
-```json
+```javascript
 //req_to_server
 {
-    type: "get_channel_history",
-    data: {
-        channel_id: "5"
+    "type": "get_channel_history",
+    "data": {
+        "channel_id": "5"
     }
 }
 
 //res_to_client
 {
-    type: "channel_history",
-    data: {
-        channel_id: "5",
+    "type": "channel_history",
+    "data": {
+        "channel_id": "5",
         messages:[{
-            user_id: "123", // id юзера.
-            user_name: "Василий",
-            user_group: 1, // на основе группы, определяется каким цветом выводить сообщения
-            message_id: "100", // номер сообщения, нужно для удаления сообщения из чата.
-            timestamp: unixtime, // время прихода сообщения на сервер.
-            text: "Всем чмоки в этом чатике." // оригинальное сообщение, за исключением того, что html-разметка эскейпится.
+            "user_id": "123", // id юзера.
+            "user_name": "Василий",
+            "user_group": 1, // на основе группы, определяется каким цветом выводить сообщения
+            "message_id": "100", // номер сообщения, нужно для удаления сообщения из чата.
+            "timestamp": unixtime, // время прихода сообщения на сервер.
+            "text": "Всем чмоки в этом чатике." // оригинальное сообщение, за исключением того, что html-разметка эскейпится.
             // клиент сам занимается преобразованием спец. символов (например подстановка смайлов).
         },
         ...] // Массив сообщений, более раннии сообщения первее.
@@ -391,47 +391,47 @@ inline-команда /list
 
 ### Получение сообщения дня, инициатор сервер.
 
-```json
+```javascript
 //res_to_client
 {
-    type: "motd",
-    data: {
-        channel_id: "5",
-        moder_id: 123,
-        moder_name: 'Валера',
-        moder_group: 1,
-        text: "Сообщение дня"
+    "type": "motd",
+    "data": {
+        "channel_id": "5",
+        "moder_id": 123,
+        "moder_name": 'Валера',
+        "moder_group": 1,
+        "text": "Сообщение дня"
     }
 }
 ```
 
 ### Получение значения задержки в сек., между отправкой сообщений.
 
-```json
+```javascript
 //res_to_client
 {
-    type: "slowmod",
-    data: {
-        channel_id: "5",
-        moder_id: 123,
-        moder_name: 'Валера',
-        moder_group: 1,
-        slowmod: 0 // в секундах
+    "type": "slowmod",
+    "data": {
+        "channel_id": "5",
+        "moder_id": 123,
+        "moder_name": 'Валера',
+        "moder_group": 1,
+        "slowmod": 0 // в секундах
     }
 }
 ```
 
 ### Отправка сообщения от клиента на сервер.
 
-```json
+```javascript
 //req_to_server
 {
-    type: "send_message",
-    data: {
-        channel_id: "5",
-        text: "Всем чмоки в этом чатике.", //html-разметка эскейпится
-        hideIcon: false, // используется в служебных целях на стороне клиента
-        mobile: false // используется в служебных целях на стороне клиента
+    "type": "send_message",
+    "data": {
+        "channel_id": "5",
+        "text": "Всем чмоки в этом чатике.", //html-разметка эскейпится
+        "hideIcon": false, // используется в служебных целях на стороне клиента
+        "mobile": false // используется в служебных целях на стороне клиента
     }
 }
 ```
@@ -449,24 +449,24 @@ inline-команда /list
 
 ### Отправка сообщения всем клиентам в канале.
 
-```json
+```javascript
 //res_to_all_in_channel
 {
-    type: "message",
-    data: {
-        channel_id: "5",
-        user_id: "123", // id юзера.
-        user_name: "Василий",
-        user_rights: 10,  // на основе прав, определяется каким цветом выводить сообщения
-        premium: false,   // премиум статус пользователя отправившего сообщение
-        hideIcon: false,  // используется в служебных целях на стороне клиента
-        mobile: false,    // используется в служебных целях на стороне клиента
-        payments: "123.45",
-        paidsmiles: [],
-        message_id: "100", // номер сообщения, нужно для удаления сообщения из чата.
-        timestamp: unixtime, // время прихода сообщения на сервер.
+    "type": "message",
+    "data": {
+        "channel_id": "5",
+        "user_id": "123", // id юзера.
+        "user_name": "Василий",
+        "user_rights": 10,  // на основе прав, определяется каким цветом выводить сообщения
+        "premium": false,   // премиум статус пользователя отправившего сообщение
+        "hideIcon": false,  // используется в служебных целях на стороне клиента
+        "mobile": false,    // используется в служебных целях на стороне клиента
+        "payments": "123.45",
+        "paidsmiles": [],
+        "message_id": "100", // номер сообщения, нужно для удаления сообщения из чата.
+        "timestamp": unixtime, // время прихода сообщения на сервер.
         color:"#6633FF", // цвет сообщения
-        text: "Всем чмоки в этом чатике." // оригинальное сообщение, за исключением того, что html-разметка эскейпится.
+        "text": "Всем чмоки в этом чатике." // оригинальное сообщение, за исключением того, что html-разметка эскейпится.
         // клиент сам занимается преобразованием спец. символов (например подстановка смайлов).
     }
 }
@@ -474,169 +474,169 @@ inline-команда /list
 
 ### Отправить приватное сообщение
 
-```json
+```javascript
 //req_to_server
 {
-    type: "send_private_message",
-    data: {
-        channel_id: "5",
-        user_id: "124" //получатель
-        text: "Привет, как дела?" // обрабатывается аналогично всем сообщениям
+    "type": "send_private_message",
+    "data": {
+        "channel_id": "5",
+        "user_id": "124" //получатель
+        "text": "Привет, как дела?" // обрабатывается аналогично всем сообщениям
     }
 }
 ```
 
 ### Получение приватного сообщения
 
-```json
+```javascript
 //res_to_client
 {
-    type: "private_message",
-    data: {
-        channel_id: "5",
-        user_id: "124", // отправитель
-        user_name: "Василий",
-        target_id: 124, // получатель
-        target_name: "Валера",
-        timestamp: unixtime,
-        text: "Привет, как дела?" // обрабатывается аналогично всем сообщениям
+    "type": "private_message",
+    "data": {
+        "channel_id": "5",
+        "user_id": "124", // отправитель
+        "user_name": "Василий",
+        "target_id": 124, // получатель
+        "target_name": "Валера",
+        "timestamp": unixtime,
+        "text": "Привет, как дела?" // обрабатывается аналогично всем сообщениям
     }
 }
 ```
 
 ### Привелигированные пользователи могут удалять сообщения в канале.
 
-```json
+```javascript
 //req_to_server
 {
-    type: "remove_message",
-    data: {
-        channel_id: "5",
-        message_id: "100" //номер сообщения которое нужно удалить.
+    "type": "remove_message",
+    "data": {
+        "channel_id": "5",
+        "message_id": "100" //номер сообщения которое нужно удалить.
     }
 }
 ```
 
 При этом сервер отсылает также всем клиентам в канале сообщение
 
-```json
+```javascript
 //res_to_all_in_channel
 {
-    type: "remove_message",
-    data: {
-        channel_id: "5",
-        message_id: "100" //номер сообщения которое нужно удалить.
+    "type": "remove_message",
+    "data": {
+        "channel_id": "5",
+        "message_id": "100" //номер сообщения которое нужно удалить.
     }
 }
 ```
 
 ### Бан пользователей
 
-```json
+```javascript
 //req_to_server
 {
-    type: "ban",
-    data: {
-        channel_id: "5", // канал в котором вынесен бан
-        ban_channel: "5", // канал в котором необходимо забанить, если 0 - то на все каналы
-        user_id: "124",
-        duration: 3600, // время бана в секундах
-        reason: "Плохо себя вёл", //причина
-        comment: "Я вас всех шатал", // текст сообщения, за который вынесен бан
-        show_ban: true // показывать ли бан
+    "type": "ban",
+    "data": {
+        "channel_id": "5", // канал в котором вынесен бан
+        "ban_channel": "5", // канал в котором необходимо забанить, если 0 - то на все каналы
+        "user_id": "124",
+        "duration": 3600, // время бана в секундах
+        "reason": "Плохо себя вёл", //причина
+        "comment": "Я вас всех шатал", // текст сообщения, за который вынесен бан
+        "show_ban": true // показывать ли бан
     }
 }
 ```
 
 Что бы всем в чате было видно, кого и за что.
 
-```json
+```javascript
 //res_to_all_in_channel
 {
-    type: "user_ban",
-    data: {
-        channel_id: "5",
-        user_id: "124", // id забаненого пользователя
-        user_name: "Василий", // ник забаненого пользователя
-        moder_id: "123", // id пользователя, вынесшего бан
-        moder_name: "Валера", // ник пользователя, вынесшего бан
-        moder_group: 1, // на основе группы, определяется каким цветом выводить сообщения
-        duration:  3600, время на сколько забанен пользователь в секундах
-        reason: "Плохо себя вёл"
+    "type": "user_ban",
+    "data": {
+        "channel_id": "5",
+        "user_id": "124", // id забаненого пользователя
+        "user_name": "Василий", // ник забаненого пользователя
+        "moder_id": "123", // id пользователя, вынесшего бан
+        "moder_name": "Валера", // ник пользователя, вынесшего бан
+        "moder_group": 1, // на основе группы, определяется каким цветом выводить сообщения
+        "duration":  3600, время на сколько забанен пользователь в секундах
+        "reason": "Плохо себя вёл"
     }
 }
 ```
 
 ### Предупреждение пользователей.
 
-```json
+```javascript
 //req_to_server
 {
-    type: "warn",
-    data: {
-        channel_id: "5",
-        user_id: "124",  // кого предупреждаем
-        reason: "Плохо себя ведешь" //причина
+    "type": "warn",
+    "data": {
+        "channel_id": "5",
+        "user_id": "124",  // кого предупреждаем
+        "reason": "Плохо себя ведешь" //причина
     }
 }
 ```
 
 Что бы всем в чате было видно, кого и за что.
 
-```json
+```javascript
 //res_to_all_in_channel
 {
-    type: "user_warn",
-    data: {
-        channel_id: "5",
-        user_id: "124", // id пользователя, кому вынесено предупреждение
-        user_name: "Василий", // ник забаненого пользователя
-        moder_id: "123", // id пользователя, вынесшего предупреждение
-        moder_name: "Валера", // ник пользователя, вынесшего бан
-        moder_group: 1, // на основе группы, определяется каким цветом выводить сообщения
-        reason: "Плохо себя ведешь"
+    "type": "user_warn",
+    "data": {
+        "channel_id": "5",
+        "user_id": "124", // id пользователя, кому вынесено предупреждение
+        "user_name": "Василий", // ник забаненого пользователя
+        "moder_id": "123", // id пользователя, вынесшего предупреждение
+        "moder_name": "Валера", // ник пользователя, вынесшего бан
+        "moder_group": 1, // на основе группы, определяется каким цветом выводить сообщения
+        "reason": "Плохо себя ведешь"
     }
 }
 ```
 
 ### Создание голосования.
 
-```json
+```javascript
 //req_to_server
 {
-    type: "new_poll",
-    data: {
-        channel_id: "5",
-        title: "Зеленое или старкрафт?", // заголовок голосования
-        answers: [{text: "Зеленое"} {text: "старкрафт"}, {text: "я упырь"}], // массив вариантов, не больше 6
+    "type": "new_poll",
+    "data": {
+        "channel_id": "5",
+        "title": "Зеленое или старкрафт?", // заголовок голосования
+        "answers": [{"text": "Зеленое"} {"text": "старкрафт"}, {"text": "я упырь"}], // массив вариантов, не больше 6
     }
 }
 ```
 
 После создания голосования, клиенты получают сообщение
 
-```json
+```javascript
 //res_to_all_in_channel
 {
-    type: "new_poll",
-    data: {
-        channel_id: "5",
-        moder_id: 6,
-        moder_name: "Василий",
-        title: "Зеленое или старкрафт?", // заголовок голосования
-        answers: [{id: 1, text: "Зеленое"}, {id: 2, text: "красное"}, {id: 3, text: "я упырь"}], // массив вариантов, не больше 6
+    "type": "new_poll",
+    "data": {
+        "channel_id": "5",
+        "moder_id": 6,
+        "moder_name": "Василий",
+        "title": "Зеленое или старкрафт?", // заголовок голосования
+        "answers": [{"id": 1, "text": "Зеленое"}, {"id": 2, "text": "красное"}, {"id": 3, "text": "я упырь"}], // массив вариантов, не больше 6
     }
 }
 ```
 
 ### Запросить текущее голосование для канала
 
-```json
+```javascript
 //req_to_server
 {
-    type: "get_poll",
-    data: {
-        channel_id: "5"
+    "type": "get_poll",
+    "data": {
+        "channel_id": "5"
     }
 }
 ```
@@ -645,40 +645,40 @@ inline-команда /list
 
 ### Выбор варианта пользователем
 
-```json
+```javascript
 //req_to_server
 {
-    type: "vote",
-    data: {
-        channel_id: "5",
-        answer_id: 1
+    "type": "vote",
+    "data": {
+        "channel_id": "5",
+        "answer_id": 1
     }
 }
 ```
 
 ### Запрос результатов голосования
 
-```json
+```javascript
 //req_to_server
 {
-    type: "get_poll_results",
-    data: {
-        channel_id: "5",
+    "type": "get_poll_results",
+    "data": {
+        "channel_id": "5",
     }
 }
 ```
 
 ### Получение результатов голосования
 
-```json
+```javascript
 //res_to_client
 {
-    type: "poll_results",
-    data: {
-        channel_id: "5",
-        voters: 200, // количество проголосовавших
-        title: "Зеленое или старкрафт?", // заголовок голосования
-        answers: [{id: 1, text: "Зеленое", voters: 100}, {id: 2, text: "красное", voters: 50}, {id: 3, text: "я упырь", voters: 50}] // массив вариантов, не больше 6
+    "type": "poll_results",
+    "data": {
+        "channel_id": "5",
+        "voters": 200, // количество проголосовавших
+        "title": "Зеленое или старкрафт?", // заголовок голосования
+        "answers": [{"id": 1, "text": "Зеленое", "voters": 100}, {"id": 2, "text": "красное", "voters": 50}, {"id": 3, "text": "я упырь", "voters": 50}] // массив вариантов, не больше 6
     }
 }
 ```
@@ -688,23 +688,23 @@ inline-команда /list
 
 ### Получение ника пользователя по его id
 
-```json
+```javascript
 //req_to_server
 {
-    type: "get_user_info",
-    data: {
-        user_id: "124"
+    "type": "get_user_info",
+    "data": {
+        "user_id": "124"
     }
 }
 ```
 
-```json
+```javascript
 //res_to_client
 {
-    type: 'user',
-    data: {
-        user_id: "124",
-        name: "Abcd"
+    "type": 'user',
+    "data": {
+        "user_id": "124",
+        "name": "Abcd"
     }
 }
 ```
@@ -715,24 +715,24 @@ inline-команда /list
 
 Уровни прав описаны ниже.
 
-```json
+```javascript
 //req_to_server
 {
-    type: "make_moderator",
-    data: {
-        channel_id: "5",
-        user_id: "124"
+    "type": "make_moderator",
+    "data": {
+        "channel_id": "5",
+        "user_id": "124"
     }
 }
 ```
 
-```json
+```javascript
 //req_to_server
 {
-    type: "clean_moderator",
-    data: {
-        channel_id: "5",
-        user_id: "124"
+    "type": "clean_moderator",
+    "data": {
+        "channel_id": "5",
+        "user_id": "124"
     }
 }
 ```
@@ -741,13 +741,13 @@ inline-команда /list
 
 Если изменяются права текущего пользователя в чате то клиент получает следующее сообщение.
 
-```json
+```javascript
 //res_to_client
 {
-    type: 'update_rights',
-    data: {
-        channel_id: "5",
-        access_rights: 10
+    "type": 'update_rights',
+    "data": {
+        "channel_id": "5",
+        "access_rights": 10
     }
 }
 ```
@@ -756,39 +756,39 @@ inline-команда /list
 
 Клиент может запросить статус премиума текущего пользователя для выбранного канала.
 
-```json
+```javascript
 //req_to_server
 {
-    type: "refresh_premium",
-    data: {
-        channel_id: 5
+    "type": "refresh_premium",
+    "data": {
+        "channel_id": 5
     }
 }
 ```
 
 Если текущий пользователь имеет премиум для этого канала, то сервер вернет следующее сообщение
 
-```json
+```javascript
 //res_to_client
 {
-    type: 'update_premium',
-    data: {
-        channel_id: 5,
-        premium: true
+    "type": 'update_premium',
+    "data": {
+        "channel_id": 5,
+        "premium": true
     }
 }
 ```
 
 ### В любой момент, с сервера может прийти сообщение, информирующее об ошибке.
 
-```json
+```javascript
 //res_to_client
 {
-    type: "error",
-    data: {
-        channel_id: "5",
+    "type": "error",
+    "data": {
+        "channel_id": "5",
         error_num : 201, // Идентификатор ошибки, разбиты по уровням.
-        errorMsg: 'Не достаточно прав' // Готовое сообщение.
+        "errorMsg": 'Не достаточно прав' // Готовое сообщение.
     }
 }
 ```
@@ -853,30 +853,30 @@ inline-команда /list
 ### Если текущий пользователь является стримером, то сервер дополнительно уведомляет о донате и активации премиумов:
 
 Донат:
-```json
+```javascript
 // res_to_client
 // Поля total и title передаются только при донате в призовой фонд турнира
 {
-    type: "payment",
-    data: {
-        channel_id: "5",
-        userName: "Петя",
-        amount: 199,
-        message: "Эгегей!",
-        total: 230,
-        title: "Турнир номер 1"
+    "type": "payment",
+    "data": {
+        "channel_id": "5",
+        "userName": "Петя",
+        "amount": 199,
+        "message": "Эгегей!",
+        "total": 230,
+        "title": "Турнир номер 1"
     }
 }
 ```
 
 Активация премиума:
-```json
+```javascript
 //res_to_client
 {
-    type: "premium",
-    data: {
-        channel_id: "5",
-        userName: "Петя"
+    "type": "premium",
+    "data": {
+        "channel_id": "5",
+        "userName": "Петя"
     }
 }
 ```
