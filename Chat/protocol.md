@@ -29,12 +29,7 @@ channel_id - идентификатор канала
 
 Для подключения к серверу чата следует использовать websocket-соединение по адресу:
 
-    ws://chat.goodgame.ru:8081/chat/websocket
-
-Для web-браузеров рекомендуется использовать библиотеку [sockjs-client](https://github.com/sockjs/sockjs-client/tree/0.3.x)
-В этом случае, url-соединения будет
-
-    http://chat.goodgame.ru:8081/chat
+    wss://chat.goodgame.ru/chat/websocket
 
 
 ## Общий вид JSON-сообщения
