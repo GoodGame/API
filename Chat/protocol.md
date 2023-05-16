@@ -860,7 +860,7 @@ inline-команда /list
         "message": "Эгегей!",
         "total": 230,
         "title": "Турнир номер 1",
-        "with_commission": boolean
+        "with_commission": false
     }
 }
 ```
