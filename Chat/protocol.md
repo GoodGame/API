@@ -860,12 +860,12 @@ inline-команда /list
         "message": "Эгегей!",
         "total": 230,
         "title": "Турнир номер 1",
-        "with_commission": false
+        "is_commission_covered": false
     }
 }
 ```
 
-* with_commission - поле типа boolean, указывающее покрыл ли донатер комиссию платежной системы
+* is_commission_covered - поле типа boolean, указывающее покрыл ли донатер комиссию платежной системы
 
 Активация премиума:
 ```javascript
