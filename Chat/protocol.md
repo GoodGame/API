@@ -29,7 +29,7 @@ channel_id - идентификатор канала
 
 Для подключения к серверу чата следует использовать websocket-соединение по адресу:
 
-    wss://chat-1.goodgame.ru/chat2/
+    wss://chat.goodgame.ru/chat/websocket
 
 
 ## Общий вид JSON-сообщения
