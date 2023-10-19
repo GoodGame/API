@@ -440,6 +440,27 @@ jobs типа ?bool, где
 }
 ```
 
+#### Обновление настроек журнала заданий
+
+```json
+//res_to_client
+{
+  "type": "update_channel_info_jobs",
+  "data": {
+    "channel_id": "5",
+    "jobs": {
+      "enabled": false,
+      "minimumAmount": 100,
+      "maxActiveJobsPerUser": 5,
+      "filter": "1,5", // Кто может создавать задания
+      "colorSkin": 0,
+      "backgroundImage": "",
+      "canCreate": false
+    }
+  }
+}
+```
+
 #### Изменение настроек
 
 ```json
