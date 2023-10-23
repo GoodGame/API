@@ -240,7 +240,7 @@ data - вынесена в отдельную json сущность, для бо
     "data": {
         "channel_id": "5",
         "channel_name": "Марафон по ...",
-		    "channel_key": "Miker",
+        "channel_key": "Miker",
         "channel_streamer": { // информация о стримере
             "baninfo": false,
             "banned": false,
@@ -280,10 +280,17 @@ data - вынесена в отдельную json сущность, для бо
         "permanent": false,
         "payments": 1,
         "paymentsAll": {"5": 1, "94123": 7},
-        "jobs": "1"
+        "jobs": true
     }
 }
 ```
+
+Где:
+
+jobs типа ?bool, где
+1. true = Задания включены;
+2. false = Задания выключены;
+3. null = неизвестный канал.
 
 В данной реализации протокола, гости находятся в состоянии readonly.
 
@@ -430,6 +437,27 @@ data - вынесена в отдельную json сущность, для бо
         "premium_only": 0,
         "started": 1693073499  // время начала трансляции (0 - стрим не запущен)
     }
+}
+```
+
+#### Обновление настроек журнала заданий
+
+```json
+//res_to_client
+{
+  "type": "update_channel_info_jobs",
+  "data": {
+    "channel_id": "5",
+    "jobs": {
+      "enabled": false,
+      "minimumAmount": 100,
+      "maxActiveJobsPerUser": 5,
+      "filter": "1,5", // Кто может создавать задания
+      "colorSkin": 0,
+      "backgroundImage": "",
+      "canCreate": false
+    }
+  }
 }
 ```
 
