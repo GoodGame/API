@@ -164,11 +164,6 @@ data - вынесена в отдельную json сущность, для бо
     "data": {
         "channel_id": "5",
         "channel_name": "имя канала",
-        "channel_streamer": {
-          "id": 1, // id пользователя
-          "name": "Miker", // nick пользователя
-          "username": "Miker" // username
-        },
         "motd": "Сообщение дня",  // сообщение дня
         "slowmod": 0, // задержка в секундах между отправкой сообщений
         "smiles": 1,

@@ -247,6 +247,7 @@ data - вынесена в отдельную json сущность, для бо
             "hidden": false,
             "id": 1,
             "name": "Miker",
+            "username": "Miker" // username
             "avatar": "1_mtmA.png",
             "payments": 7,
             "premium": 1,
