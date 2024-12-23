@@ -800,7 +800,8 @@ jobs типа ?bool, где
     "data": {
         "channel_id": 190074,
         "title": "Премиум на 30 дней на канал jokie",
-        "payer": "marked0ne",
+        "payer": "marked0ne",  
+        "payerId": 779436,
         "users": [
             {
                 "id": 1234163,
@@ -810,6 +811,8 @@ jobs типа ?bool, где
     }
 }
 ```
+
+payerId может быть null, если премиумы подарены анонимно
 
 ### Модерация
 
