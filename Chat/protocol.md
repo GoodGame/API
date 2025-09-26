@@ -816,6 +816,10 @@ inline-команда /list
 
 Для разных каналов доступен разный набор смайлов. Весь набор смайлов, а также их тип можно получить по url:
 
+    https://goodgame.ru/js/minified/global.json
+
+Legacy:
+
     http://goodgame.ru/js/minified/global.js
 
 Рассмотрим структуру ответа:
@@ -825,6 +829,8 @@ inline-команда /list
         Channel_Smiles : {"1577":[{"bind":"1","name":"shimoro2","donat":0,"premium":1,"paid":0}, ... }
         ...
     }
+
+Ключи у global.json и global.js совпадают
 
 Ключ `Smiles` отвечает за общедоступные смайлы, `Channel_Smiles` - за смайлы, привязанные к конкретному каналу.
 
