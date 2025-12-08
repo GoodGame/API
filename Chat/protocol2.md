@@ -1134,7 +1134,12 @@ payerId может быть null, если премиумы подарены а�
 
 Для разных каналов доступен разный набор смайлов. Весь набор смайлов, а также их тип можно получить по url:
 
+    https://goodgame.ru/js/minified/global.json
+
+Legacy:
+
     http://goodgame.ru/js/minified/global.js
+
 
 Рассмотрим структуру ответа:
 
