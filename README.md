@@ -6,6 +6,8 @@
 
 **[Документация v2](/Chat/protocol2.md) (actual)**
 
+**[Документация по определению цвета и иконки пользователя](/Chat/IconService.md) (actual)**
+
 ## Стрим-сервис
 
 [Документация v1](/Streams/stream_api.md) (legacy)
