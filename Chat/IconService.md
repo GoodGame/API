@@ -76,7 +76,7 @@ var role  = getRole(message.user);                // например 'moderator
 
 4. **Каскад по умолчанию** (первый непустой):
    1. кастомный цвет комнаты `settings.customColors[user.roomid]`;
-   2. `_adminColor(user)` — в коде сюда по ошибке передаётся весь объект `user`, а не `user.rights`, поэтому фактически всегда «мимо»; при переносе см. раздел «Квирки»;
+   2. цвет по правам — для интеграции вычисляйте таблицей из шага 1 по `user.rights` (в дефолтном каскаде выполняется только для сотрудников, см. раздел «Особенности»);
    3. `paymentsColors[user.payments]` — цвет за уровень доната;
    4. `roomPremium` → `premium-personal`;
    5. `commonPremium` → `premium`;
@@ -191,7 +191,7 @@ var inviteIcons = ['invite', 'invite-1', 'invite-2', 'invite-3'];
 | `lawyer` | нужен `user.lawyer` |
 | `star` | нужен `user.premium` |
 | `moderator` | нужен `rights > 20` |
-| `ggplus` | разрешено при `ggPlusTier > 0` (см. квирки — в дефолтном каскаде порог `>= 0`) |
+| `ggplus` | разрешено при `ggPlusTier > 0` (в дефолтном каскаде порог мягче — `>= 0`, см. «Особенности») |
 | `invite*` | цифра в имени (`invite-2` → 2) должна быть ≤ `user.inviteLevels[0]`; у самого `invite` цифры нет |
 | донат-иконка | индекс в `paymentsIcons` ≤ `user.payments` |
 
@@ -199,10 +199,10 @@ var inviteIcons = ['invite', 'invite-1', 'invite-2', 'invite-3'];
 
 ## SCSS для цветов и иконок
 
-Функции возвращают только имена классов, поэтому вся визуализация живёт в CSS. Ниже рабочий каркас под структуру разметки из примера интеграции (назад к строке сообщения вешаются `color`+`icon`, внутри неё — `<i class="icon icon-…">` и ника). Значения цветов взяты из боевых стилей чата — подгоняйте под свою палитру.
+Функции возвращают только имена классов, поэтому вся визуализация живёт в CSS. Ниже рабочий каркас под структуру разметки из примера интеграции (назад к строке сообщения вешаются `color`+`icon`, внутри неё — `<i class="icon icon-…">` и ника). Значения цветов соответствуют актуальным стилям goodgame.ru — подгоняйте под свою палитру.
 
 ```scss
-// ---- Палитра ников (значения — из боевых стилей чата) ---------------------
+// ---- Палитра ников (значения — как на goodgame.ru) ------------------------
 $nick-colors: (
     // простые цвета
     simple:          #75adfc,
@@ -339,17 +339,17 @@ $icon-base: 'https://goodgame.ru/images/chat-svg-icons';
 
 ---
 
-## Квирки и особенности (важно при самостоятельной реализации)
+## Особенности (важно при самостоятельной реализации)
 
-1. **Двойная проверка прав на цвет.** В каскаде цвета есть и шаг 1 (`_adminColor(user.rights)` при `!user.staff`), и шаг `_adminColor(user)` уже после новичка/custom — но этот шаг передаёт целиком `user`, поэтому lookup по rights всегда даёт `undefined`. Фактически этот шаг мёртвый. При переносе либо воспроизведите как есть, либо передавайте `user.rights` — визуально результат почти не изменится (для прав 10/20/30… свой цвет уже вернулся на шаге 1, кастомный цвет у таких юзеров всё равно пройдёт шаг 3).
+1. **Права приоритетнее всего остального в цвете.** Права проверяются первым шагом, до «новичка», кастомных и выбранных цветов; в дефолтном каскаде цвет по правам учитывается только для сотрудников. Если реализуете каскад сами — вычисляйте цвет по правам таблицей из шага 1 для пользователей со `staff` (или просто по `user.rights`): для остальных результат тот же, ведь их цвет по правам уже вернулся первым шагом при выборе пользовательского цвета.
 
-2. **`colorAvaiable` для донат-цветов не проверяет ничего, кроме уровня доната** — например, пользователь без `commonPremium` всё равно может выбрать донат-цвет уровня ≤ своего доната.
+2. **Для донат-цветов проверяется только уровень доната** — например, пользователь без `commonPremium` может выбрать донат-цвет уровня ≤ своего доната.
 
-3. **`staff`-флаг обходит проверки выбранного цвета** — сотруднику разрешён любой цвет из белого списка.
+3. **Сотрудникам доступен широкий выбор оформления** — все цвета/иконки из белого списка, без проверки соответствия уровням.
 
-4. **Проверки прав для цвета и иконки разные**: цвет `streamer` с `rights >= 20`, иконка `moderator` с `rights > 20`; и `helper` (10) не имеет цветового аналога.
+4. **Пороги для цвета и иконки разные**: цвет `streamer` с `rights >= 20`, иконка `moderator` с `rights > 20`; иконка `helper` (rights 10) не имеет цветового аналога.
 
-5. **Заккомментированные invite-иконки** (`retroghost`, `invader`, `tank`) — есть в комментариях исходника, в белый список не входят.
+5. **Неподдерживаемые invite-иконки** (`retroghost`, `invader`, `tank`) — в белый список не входят, выбираются только `invite`, `invite-1`, `invite-2`, `invite-3`.
 
 6. **`_getCustomColor`/`_getCustomIcon` завёрнуты в try/catch** — если у автора нет `settings`, или `customColors`/`customIcons` отсутствуют, вернётся `false`, и каскад пойдёт дальше. Делайте защитный доступ (`settings?.customColors?.[roomid]` или аналогично), чтобы не падать на неполных данных.
 
@@ -366,24 +366,24 @@ $icon-base: 'https://goodgame.ru/images/chat-svg-icons';
 ```js
 // message = { text, user, data? } — пришло из чата
 function renderMessage(message) {
-    var color = getColor(message.user, message.data);   // например 'gold'
-    var icon  = getIcon(message.user, message.data);    // например 'eagle'
-    var role  = getRole(message.user);                  // например 'moderator'
+  var color = getColor(message.user, message.data);   // например 'gold'
+  var icon  = getIcon(message.user, message.data);    // например 'eagle'
+  var role  = getRole(message.user);                  // например 'moderator'
 
-    // ggplus требует подтип: число ресабов подставляется вторым классом
-    var iconClass = icon === 'ggplus'
-        ? 'icon-ggplus ggplus-' + message.user.ggPlusTier
-        : 'icon-' + icon;
+  // ggplus требует подтип: число ресабов подставляется вторым классом
+  var iconClass = icon === 'ggplus'
+    ? 'icon-ggplus ggplus-' + message.user.ggPlusTier
+    : 'icon-' + icon;
 
-    var el = document.createElement('div');
-    el.className = 'chat-message nickname ' + color;
-    el.innerHTML =
-        '<i class="icon ' + iconClass + '"></i>' +
-        '<span class="name">' + escapeHtml(message.user.name) + '</span>' +
-        (role ? '<span class="role">' + escapeHtml(role) + '</span>' : '') +
-        '<span class="text">' + escapeHtml(message.text) + '</span>';
+  var el = document.createElement('div');
+  el.className = 'chat-message nickname ' + color;
+  el.innerHTML =
+    '<i class="icon ' + iconClass + '"></i>' +
+    '<span class="name">' + escapeHtml(message.user.name) + '</span>' +
+    (role ? '<span class="role">' + escapeHtml(role) + '</span>' : '') +
+    '<span class="text">' + escapeHtml(message.text) + '</span>';
 
-    // добавьте el в контейнер сообщений
+  // добавьте el в контейнер сообщений
 }
 ```
 
