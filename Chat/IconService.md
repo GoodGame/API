@@ -339,6 +339,209 @@ $icon-base: 'https://goodgame.ru/images/chat-svg-icons';
 
 ---
 
+## Прогресс премиума на канал (`premium-advantages__progress-bar`)
+
+Это тот же «язык оформления», что и выше, но в попапе «Что даёт премиум на канал» (`gg-window-advantages`): горизонтальная полоса-шкала показывает, **какая иконка в чате и какой цвет ждут подписчика на каждом сроке премиума канала** — от 1 месяца до 8 лет. Чем дольше подписка, тем правее ступенька по градиентной линии.
+
+### Откуда данные
+
+Данные грузятся запросом **`GET /api/4/streams/premium-settings?channel=<id или имя канала>`** и кладутся в поле `streamer`:
+
+```js
+streamer = {
+    // ...
+    streamer: { avatar, firstname, lastname, ... }, // аватар/имя стримера в шапке попапа
+    channel:  { ... },                              // данные канала
+    smiles:   ['smile1', ...],                      // ключи уникальных смайлов канала
+    prices:   [ { id, months, price, baseAmount, discountPercent, pricePerMonth, ... } ],
+    icons: {                                        // чат-иконки по типам подписки
+        "1": { "48": "<имя>48.png", "32": "<имя>32.png", "16": "<имя>16.png" }, // 1 мес.
+        "2": { "48": ..., "32": ..., "16": ... },   // 3 мес.
+        "3": { "48": ..., "32": ..., "16": ... },   // полгода
+        "4": { "48": ..., "32": ..., "16": ... }    // год
+    }
+};
+// ключи «1..4» — это type подписки: 30/90/180/360 дней;
+// у канала могут быть не все ключи — заводятся последовательно, без пропусков
+```
+
+Шкала-константа на 7 ступеней (метки и дефолтные картинки):
+
+| № | Метка | Дефолтная картинка |
+|---|---|---|
+| 1 | 1 мес. | `/images/gg-plus/progressbar/1month.svg` |
+| 2 | 3 мес. | `/images/gg-plus/progressbar/3months.svg` |
+| 3 | Полгода | `/images/gg-plus/progressbar/6months.svg` |
+| 4 | Год | `/images/gg-plus/progressbar/1year.svg` |
+| 5 | 2 года | `/images/gg-plus/progressbar/2year.svg` |
+| 6 | 4 года | `/images/gg-plus/progressbar/4year.svg` |
+| 7 | 8 лет | `/images/gg-plus/progressbar/8year.svg` |
+
+Сопоставление «иконка ↔ метка» делается **по порядку**: первые `Object.keys(streamer.icons).length` ступеней рисуют иконку с сервера (`https://goodgame.ru/files/icons/<имя файла из icons[key]['48']>`) и метку `duration[i].label`; если иконок меньше семи, оставшиеся ступени рисуют дефолтные svg-картинки из таблицы.
+
+### Как именно подставляется иконка
+
+Подстановка — три шага: «ключ → имя файла → полный url».
+
+1. **Ключ ступени** — `type` подписки из API: `1` = 30 дней (1 мес.), `2` = 90 дней (3 мес.), `3` = 180 дней (полгода), `4` = 360 дней (год). API отдаёт `icons` уже размеченным по этим ключам:
+
+```js
+streamer.icons = {
+    "1": { "48": "iconname48.png", "32": "iconname32.png", "16": "iconname16.png" },
+    "2": { "48": "iconname48.png", "32": "iconname32.png", "16": "iconname16.png" },
+    // ...
+}
+```
+
+   (значение `icons[type]` — картинка в трёх размерах 48/32/16; для прогресс-бара берётся `['48']`)
+
+2. **Разметка** берёт имя файла по ключу и собирает полный url:
+
+```html
+<div *ngFor="let key of Object.keys(streamer.icons); index as i">
+    <img src="https://goodgame.ru/files/icons/{{ streamer.icons[key]['48'] }}"/>
+    <p>{{duration[i].label}}</p>          <!-- метка срока по позиции i, не по ключу -->
+</div>
+<!-- ступени без своей иконки: дефолтные svg из duration -->
+<div *ngFor="let element of duration.slice(Object.keys(streamer.icons).length)">
+    <img [src]="element.url" width="48" height="48"/>
+    <p>{{element.label}}</p>
+</div>
+```
+
+3. **То же в чистом JS** (без шаблонизатора) — одна функция подставляет иконку на нужную ступень:
+
+```js
+var ICON_BASE = 'https://goodgame.ru/files/icons/';
+
+// возвращает src иконки для ступени с номером step (1..7) и её метку
+function stepFor(step, streamer) {
+  var keys = Object.keys(streamer.icons);           // ['1', '2', ...] по порядку
+  var i = step - 1;
+
+  if (i < keys.length) {
+    // ступень с серверной иконкой канала
+    return {
+      url:  ICON_BASE + streamer.icons[keys[i]]['48'],  // подстановка иконки
+      label: duration[i].label
+    };
+  }
+
+  // ступень дальше — дефолтная картинка из шкалы
+  return { url: duration[i].url, label: duration[i].label };
+}
+
+// <img src="stepFor(2, streamer).url" alt="">  → https://goodgame.ru/files/icons/<имя>48.png
+```
+
+Важные правила этой подстановки:
+
+- **Ключи `icons` — строки** (`"1"`, `"2"`…), порядок обхода `Object.keys()` даёт их по возрастанию — поэтому «первая ступень» = `type 1` (1 мес.).
+- **Метка берётся по позиции**, а не по ключу: у ступени №2 подпись `duration[1].label` («3 мес.»), даже если ключ другой — связка «ключ = позиция» должна соблюдаться на стороне данных (иконки заводятся последовательно, без пропусков).
+- **Размер `48`** — для попапа; при другой разметке можно взять `['32']`/`['16']` из того же объекта.
+- **Расширение файла — `.png`** (иконки канала), в отличие от дефолтных ступеней, там svg.
+- Если у канала иконок нет вообще (`icons` пуст), все 7 ступеней рисуются дефолтными svg — разметка не меняется.
+
+### Разметка (десктоп)
+
+```html
+<div class="premium-advantages__progress-bar">
+    <!-- ступень = картинка 48x48 + подпись под ней -->
+    <div><img src="https://goodgame.ru/files/icons/..." alt=""><p>1 мес.</p></div>
+    <!-- ... всего до 7 ступеней -->
+</div>
+```
+
+### Стили (SCSS)
+
+```scss
+.premium-advantages__progress-bar {
+  position: relative;
+  height: 4px;
+  width: 672px;
+  margin: 0 auto 68px;
+
+  // линия-градиент «дорогая» палитра: тёмно-багровый → изумрудный
+  background: linear-gradient(90deg, #721933 0%, #1EA384 100%);
+
+  div {
+    position: absolute;
+    top: -23px;          // картинка+подпись висят над линией
+
+    img { width: 48px; height: 48px; }
+
+    p {
+      margin: 0; padding: 0;
+      font-size: 12px; line-height: 22px; text-align: center;
+      color: $chatGrey;                          // приглушённо-серая подпись
+    }
+
+    // фиксированные X-позиции ступеней (ступени «разжаты» к правому краю)
+    &:first-child  { left: -24px; }
+    &:nth-child(2) { left: 54px; }
+    &:nth-child(3) { left: 132px; }
+    &:nth-child(4) { left: 240px; }
+    &:nth-child(5) { left: 368px; }
+    &:nth-child(6) { left: 496px; }
+    &:nth-child(7) { left: 648px; }
+  }
+}
+```
+
+Заметьте: смещения ступеней неравномерные (`-24 → 54 → 132 → 240 → 368 → 496 → 648`) — интервалы растут, чтобы короткие сроки (1–3 мес.) не слипались, а правые ступени сидели у правого края шкалы.
+
+### Мобильная версия (`≤ 768px`)
+
+Десктопный прогресс-бар прячется (`display: none`), вместо него включается двухрядная версия `premium-advantages__mobile-progress-bar`: те же ступени, две полосы по 84% ширины — верхняя (4 ступени: 1 мес./3 мес./полгода/год) и нижняя (3 ступени: 2/4/8 лет):
+
+```scss
+.premium-advantages__mobile-top-progress {
+  position: relative;
+  width: 84%; height: 4px;
+  margin-bottom: 74px;
+  background: linear-gradient(90deg, #721933 0%, #623443 100%); // переходная часть
+
+  div {
+    position: absolute; top: -23px;
+    &:first-child  { left: -24px; }
+    &:nth-child(2) { left: 20%; }
+    &:nth-child(3) { left: 50%; }
+    &:nth-child(4) { right: -24px; }
+  }
+}
+
+.premium-advantages__mobile-bottom-progress {
+  position: relative;
+  width: 84%; height: 4px;
+  background: linear-gradient(90deg, #623443 0%, #1EA384 100%); // зелёная часть
+
+  div {
+    position: absolute; top: -23px;
+    &:first-child { left: -24px; }
+    &:nth-child(2) { left: 38%; }
+    &:last-child   { right: -24px; }
+  }
+}
+
+@media(min-width: 769px) { .premium-advantages__mobile-progress-bar { display: none; } }
+```
+
+Позиции по `%` (`20%`, `50%`, `38%`) — мобильная шкала «резиновая», а крайние ступени выходят на `-24px` за края полосы (по ширине полукартинки).
+
+### Разница с GG+ (без канала)
+
+Когда попап открыт не для канала, а для общего GG+, вместо этого блока рисуется `ggplus-advantages__progress-bar` — та же разметка и те же фиксированные позиции, но:
+
+- градиент другой: `linear-gradient(90deg, #7EB9B9 0%, #7E2595 100%)` (бирюза → фиолет);
+- иконки всегда статичные — семь svg из таблицы выше (`/images/gg-plus/progressbar/*.svg`), данные из API не нужны;
+- мобильная двухрядная версия та же (`premium-advantages__mobile-progress-bar`).
+
+### Как это связано с чатом
+
+Иконки, показанные на шкале, — это те самые чат-иконки уровня доната (`paymentsIcons`: bronze/silver/gold/…), которые потом приходят в сообщениях и раскрашиваются стилями из раздела «SCSS для цветов и иконок». То есть шкала в попапе — наглядный «прайс» на оформление из этой документации.
+
+---
+
 ## Особенности (важно при самостоятельной реализации)
 
 1. **Права приоритетнее всего остального в цвете.** Права проверяются первым шагом, до «новичка», кастомных и выбранных цветов; в дефолтном каскаде цвет по правам учитывается только для сотрудников. Если реализуете каскад сами — вычисляйте цвет по правам таблицей из шага 1 для пользователей со `staff` (или просто по `user.rights`): для остальных результат тот же, ведь их цвет по правам уже вернулся первым шагом при выборе пользовательского цвета.
